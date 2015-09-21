@@ -5,18 +5,23 @@ function setup() {
   // create canvas
   createCanvas(windowWidth, windowHeight);
 
-  input = createInput();
-  input.position(20, 65);
+  input = createInput(["Enter your name"]);
+  input.position(windowWidth/2 - 100, windowHeight/2- 100);
 
   button = createButton('submit');
-  button.position(150, 65);
+  button.position(windowWidth/2 + 30, windowHeight/2- 100);
   button.mousePressed(generateNewName);
 
-  greeting = createElement('h2', 'Enter your name:');
-  greeting.position(20, 5);
+  textFont("Helvetica");
+
+  //greeting = createElement('h2', 'Name Generator');
+  //greeting.position(windowWidth/2 - 100, windowHeight/2);
 
   textAlign(CENTER)
   textSize(50);
+
+  text('Name Generator', windowWidth/2, windowHeight/2- 200)
+
 }
 
 function generateNewName() {
@@ -41,7 +46,10 @@ function generateNewName() {
   tempName[spaceIndex+1] = tempName[spaceIndex+1].toUpperCase();
   
   newName = tempName.join('')
-  greeting.html('Now you are '+newName+'!');
+  textSize(20);
+  text('Now you are ' + newName, windowWidth/2, windowHeight/2);
+  //text(newName, windowWidth/2, windowHeight/2);
+  //greeting.html(newName);
   input.value('');
 
 
