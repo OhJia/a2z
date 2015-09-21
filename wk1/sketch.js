@@ -1,4 +1,4 @@
-var input, button, greeting;
+var input, button, nameText;
 
 function setup() {
 
@@ -18,6 +18,8 @@ function setup() {
   //greeting.position(windowWidth/2 - 100, windowHeight/2);
 
   textAlign(CENTER)
+  nameText = createElement('h2', '');
+  nameText.position(windowWidth/2 - 150, windowHeight/2);
   textSize(50);
 
   text('Name Generator', windowWidth/2, windowHeight/2- 200)
@@ -47,21 +49,12 @@ function generateNewName() {
   
   newName = tempName.join('')
   textSize(20);
-  text('Now you are ' + newName, windowWidth/2, windowHeight/2);
-  //text(newName, windowWidth/2, windowHeight/2);
-  //greeting.html(newName);
-  input.value('');
 
+  nameText.html('Now you are ' + newName);
+  //text('Now you are ' + newName, windowWidth/2, windowHeight/2);
 
+  input.value('Enter your name');
 
-  // for (var i=0; i<200; i++) {
-  //   push();
-  //   fill(random(255), 255, 255);
-  //   translate(random(width), random(height));
-  //   rotate(random(2*PI));
-  //   text(name, 0, 0);
-  //   pop();
-  // }
 }
 
 // Durstenfeld shuffle
