@@ -56,7 +56,7 @@ function generateNewName() {
   newName = tempName.join('')
   textSize(20);
 
-  nameText.html('Now you are ' + newName);
+  nameText.html('You are now ' + newName);
   nameText.position(windowWidth/2 - nameText.elt.offsetWidth/2, windowHeight/2);
 
   input.value('Enter your name');
