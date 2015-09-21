@@ -1,4 +1,4 @@
-var input, button, nameText, w;
+var input, button, nameText, w, color;
 
 function setup() {
 
@@ -57,9 +57,19 @@ function generateNewName() {
   textSize(20);
 
   nameText.html('You are now ' + newName);
+  
   nameText.position(windowWidth/2 - nameText.elt.offsetWidth/2, windowHeight/2);
 
   input.value('Enter your name');
+
+  for (var i=0; i<200; i++) {
+    push();
+    fill(random(200, 255), random(200, 255), random(200, 255));
+    translate(random(width), random(height));
+    rotate(random(2*PI));
+    text(newName, 0, 0);
+    pop();
+  }
 
 }
 
