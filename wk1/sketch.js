@@ -7,6 +7,9 @@ function setup() {
 
   input = createInput(["Enter your name"]);
   input.position(windowWidth/2 - 100, windowHeight/2- 100);
+  input.mousePressed(function(){
+    input.value('');
+  });
 
   button = createButton('submit');
   button.position(windowWidth/2 + 50, windowHeight/2- 100);
@@ -70,6 +73,7 @@ function shuffleArray(array) {
     }
     return array;
 }
+
 
 
 
