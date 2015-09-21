@@ -1,4 +1,4 @@
-var input, button, nameText;
+var input, button, nameText, w;
 
 function setup() {
 
@@ -9,17 +9,19 @@ function setup() {
   input.position(windowWidth/2 - 100, windowHeight/2- 100);
 
   button = createButton('submit');
-  button.position(windowWidth/2 + 30, windowHeight/2- 100);
+  button.position(windowWidth/2 + 50, windowHeight/2- 100);
   button.mousePressed(generateNewName);
 
   textFont("Helvetica");
 
-  //greeting = createElement('h2', 'Name Generator');
-  //greeting.position(windowWidth/2 - 100, windowHeight/2);
-
   textAlign(CENTER)
   nameText = createElement('h2', '');
-  nameText.position(windowWidth/2 - 150, windowHeight/2);
+  var style = nameText.elt.style.display;
+  var hidden = nameText.elt.style.display === 'none';
+  nameText.elt.style.display = 'block';   
+  nameText.position(windowWidth/2, windowHeight/2);
+  
+  //nameText.center();
   textSize(50);
 
   text('Name Generator', windowWidth/2, windowHeight/2- 200)
@@ -31,6 +33,7 @@ function generateNewName() {
   name = name.toLowerCase();
   var tempName = [];
   var newName;
+  t = '';
 
   for (var i=0; i < name.length; i++) {
   	if (name[i] !== " ") {
@@ -51,13 +54,13 @@ function generateNewName() {
   textSize(20);
 
   nameText.html('Now you are ' + newName);
-  //text('Now you are ' + newName, windowWidth/2, windowHeight/2);
+  nameText.position(windowWidth/2 - nameText.elt.offsetWidth/2, windowHeight/2);
 
   input.value('Enter your name');
 
 }
 
-// Durstenfeld shuffle
+// Durstenfeld shuffle: modern version of Fisher-Yates
 function shuffleArray(array) {
     for (var i = array.length - 1; i > 0; i--) {
         var j = Math.floor(Math.random() * (i + 1));
@@ -67,5 +70,6 @@ function shuffleArray(array) {
     }
     return array;
 }
+
 
 

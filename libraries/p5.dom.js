@@ -16,7 +16,7 @@
  * <a href="http://p5js.org/download">p5 complete</a> or you can download the single file
  * <a href="https://raw.githubusercontent.com/lmccart/p5.js/master/lib/addons/p5.dom.js">
  * here</a>.</p>
- * <p>See <a href="https://github.com/processing/p5.js/wiki/Beyond-the-canvas">tutorial: beyond the canvas</a>
+ * <p>See <a href="https://github.com/processing/p5.js/wiki/Beyond-the-canvas">tutorial: beyond the canvas]</a>
  * for more info on how to use this libary.</a>
  *
  * @module p5.dom
@@ -211,11 +211,14 @@
   p5.prototype.createImg = function() {
     var elt = document.createElement('img');
     var args = arguments;
-    var self = {};
+    var self;
     var setAttrs = function(){
-      self.width = elt.width;
-      self.height = elt.height;
-      if (args.length === 3 && typeof args[2] === 'function'){
+      self.width = elt.offsetWidth;
+      self.height = elt.offsetHeight;
+      if (args.length > 1 && typeof args[1] === 'function'){
+        self.fn = args[1];
+        self.fn();
+      }else if (args.length > 1 && typeof args[2] === 'function'){
         self.fn = args[2];
         self.fn();
       }
@@ -224,12 +227,8 @@
     if (args.length > 1 && typeof args[1] === 'string'){
       elt.alt = args[1];
     }
-    if (elt.complete){
+    elt.onload = function(){
       setAttrs();
-    }else{
-      elt.onload = function(){
-        setAttrs();
-      }
     }
     self = addElement(elt, this);
     return self;
@@ -253,6 +252,50 @@
     elt.innerHTML = html;
     if (target) elt.target = target;
     return addElement(elt, this);
+  };
+
+  /**
+   * Creates an &lt;a&gt;&lt;/a&gt; element in the DOM for including a hyperlink.
+   * Appends to the container node if one is specified, otherwise
+   * appends to body.
+   *
+   * @param  {String} align       passing 'vertical', 'horizontal', or 'both' aligns element accordingly
+   * @return {Object/p5.Element} pointer to p5.Element holding created node
+   */
+  
+  p5.Element.prototype.center = function(align) {
+    var style = this.elt.style.display;
+    var hidden = this.elt.style.display === 'none';
+    var pos = this.position();
+
+    if (hidden)
+      this.show();
+
+    this.elt.style.display = 'block'; 
+    this.position(0,0);
+
+    var wOffset = this.parent().offsetWidth - this.elt.offsetWidth;
+    var hOffset = this.parent().offsetHeight - this.elt.offsetHeight;
+
+
+
+    if (align === 'both' || !align){
+      this.position(wOffset/2, hOffset/2);
+    }else if (align === 'horizontal'){
+      var y = pos.y;
+      this.position(wOffset/2, y);
+      console.log(this.position(), 'pospospos');
+    }else if (align === 'vertical'){
+      var x = pos.x;
+      this.position(x, hOffset/2);
+    }
+
+    this.style('display', style);
+    
+    if (hidden)
+      this.hide();
+    
+    return this;
   };
 
   /** INPUT **/
@@ -323,16 +366,11 @@
       }
       return self;
     };
-    this.value = function(val){
-      self.value = val;
-      return this;
-    };
     if (arguments[0]){
       var ran = Math.random().toString(36).slice(2);
       var label = document.createElement('label');
       elt.setAttribute('id', ran);
       label.htmlFor = ran;
-      self.value(arguments[0]);
       label.appendChild(document.createTextNode(arguments[0]));
       addElement(label, this);
     }
@@ -343,12 +381,12 @@
   };
 
   /**
-   * Creates a dropdown menu &lt;select&gt;&lt;/select&gt; element in the DOM.
-   * @method createSelect
+   * Creates a dropdown menu &lt;input&gt;&lt;/input&gt; element in the DOM.
+   * @method createDropdown
    * @param {boolean} [multiple] [true if dropdown should support multiple selections]
    * @return {Object/p5.Element} pointer to p5.Element holding created node
    */
-  p5.prototype.createSelect = function(mult) {
+  p5.prototype.createDropdown = function(mult) {
     var elt = document.createElement('select');
     if (mult){
       elt.setAttribute('multiple', 'true');
@@ -357,10 +395,7 @@
     self.option = function(name, value){
       var opt = document.createElement('option');
       opt.innerHTML = name;
-      if (arguments.length > 1)
-        opt.value = value;
-      else
-        opt.value = name;
+      opt.value = value;
       elt.appendChild(opt);
     };
     self.selected = function(value){
@@ -576,7 +611,7 @@
    *                                    stream has loaded
    * @return {Object/p5.Element} capture video p5.Element
    * @example
-   * <div class='norender'><code>
+   * <div><class='norender'><code>
    * var capture;
    *
    * function setup() {
@@ -589,7 +624,7 @@
    *   filter(INVERT);
    * }
    * </code></div>
-   * <div class='norender'><code>
+   * <div><class='norender'><code>
    * function setup() {
    *   createCanvas(480, 120);
    *   var constraints = {
@@ -797,9 +832,17 @@
     if (arguments.length === 0){
       return { 'x' : this.elt.offsetLeft , 'y' : this.elt.offsetTop };
     }else{
-      this.elt.style.position = 'absolute';
-      this.elt.style.left = arguments[0]+'px';
-      this.elt.style.top = arguments[1]+'px';
+      if (!arguments[2] || arguments[2] === 'absolute')
+        this.elt.style.position = 'absolute';
+      else
+        this.elt.style.position = arguments[2];
+      if (arguments[0][arguments[0].length - 1] === '%'){
+        this.elt.style.left = arguments[0];
+        this.elt.style.top = arguments[1];
+      }else{
+        this.elt.style.left = arguments[0]+'px';
+        this.elt.style.top = arguments[1]+'px';
+      }
       this.x = arguments[0];
       this.y = arguments[1];
       return this;
@@ -1254,18 +1297,18 @@
   }
   p5.MediaElement.prototype.updatePixels =  function(x, y, w, h){
     if (this.loadedmetadata) { // wait for metadata
-      p5.Renderer2D.prototype.updatePixels.call(this, x, y, w, h);
+      p5.prototype.updatePixels.call(this, x, y, w, h);
     }
     return this;
   }
   p5.MediaElement.prototype.get = function(x, y, w, h){
     if (this.loadedmetadata) { // wait for metadata
-      return p5.Renderer2D.prototype.get.call(this, x, y, w, h);
+      return p5.prototype.get.call(this, x, y, w, h);
     } else return [0, 0, 0, 255];
   };
   p5.MediaElement.prototype.set = function(x, y, imgOrCol){
     if (this.loadedmetadata) { // wait for metadata
-      p5.Renderer2D.prototype.set.call(this, x, y, imgOrCol);
+      p5.prototype.set.call(this, x, y, imgOrCol);
     }
   };
 
