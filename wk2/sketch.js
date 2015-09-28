@@ -5,6 +5,7 @@ function setup() {
   // create canvas
   createCanvas(windowWidth, windowHeight);
 
+
   input = createInput(["Enter your name"]);
   input.position(windowWidth/2 - 100, windowHeight/2- 100);
   input.mousePressed(function(){
