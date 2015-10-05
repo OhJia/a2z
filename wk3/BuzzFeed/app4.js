@@ -154,7 +154,7 @@ setTimeout(function() {
 				speakIt( words[counter], voice, 0.5, 2+ Math.sin(counter));
 			//}
 			}
-			setTimeout(count, 1400*counter);
+			setTimeout(count, 1450*counter);
 			//count();
 		}
 
