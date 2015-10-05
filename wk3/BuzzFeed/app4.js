@@ -151,10 +151,10 @@ setTimeout(function() {
 		function talk(counter){
 			function count() {
 				//if (SingingOn) {
-				speakIt( words[counter], voice, 10.0 + Math.sin(counter), 2.0 + Math.sin(counter));
+				speakIt( words[counter], voice, 0.5, 2+ Math.sin(counter));
 			//}
 			}
-			setTimeout(count, 1300*counter);
+			setTimeout(count, 1400*counter);
 			//count();
 		}
 
