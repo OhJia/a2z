@@ -384,7 +384,7 @@ for (var i = 0; i < allH2.length; i++){
 setTimeout(function() {
 
 	voices = window.speechSynthesis.getVoices(); // because it helps since speech chrome api is buggy
-	var voice = voices.filter(function(v) { return v.name == 'Bad News'; })[0];
+	var voice = voices.filter(function(v) { return v.name == 'Boing'; })[0];
 
 	var speakIt = function(text, voice, rate, pitch) {
 	  window.speechSynthesis.cancel(); // because it helps since speech chrome api is buggy
@@ -448,8 +448,10 @@ setTimeout(function() {
 		function count() {
 			console.log('count')
 			setTimeout(function(){
-				speakIt(allParagraphs[counter], voice, rate, pitchh + sin(count));
-			}, 5)							
+				speakIt(allParagraphs[counter], voice, rate, pitchh);
+			}, 5)
+			
+					
 		}
 		count();
 	}
