@@ -1,6 +1,7 @@
 /********************************************* 
 p5 DOM button
 *********************************************/
+var movingElement;
 var play = false;
 var btn = document.createElement("BUTTON");
 if (btn){
@@ -15,6 +16,9 @@ if (btn){
 }
 document.body.appendChild(btn); 
 
+var x = 100;
+var y = 200;
+
 btn.addEventListener("click", function(){
 	play = !play;
 	makeHighlighted(0);
@@ -22,12 +26,25 @@ btn.addEventListener("click", function(){
 
 
 function setup() {
+
 	noCanvas();
+	movingElement = select('#author-0');
+	console.log("MOVING ELEMENT")
+	console.log('moving pos', movingElement.position());
+
 	// button = createButton('play');
 	// button.parent(p5Button);
  //  	button.position(150, 300);
  //  	button.style("z-index", "999")
   	//button.mousePressed(generateNewName);
+}
+
+// P5 DOM UPDATE
+
+function draw() {
+	// console.log('movingEl pos: ', movingElement.position());
+	movingElement.position(x, movingElement.position().y)
+	x++;
 }
 
 /************* End of button ********************/
@@ -349,7 +366,7 @@ x try: read one paragraph after another
 
 //var text = "Bernie Sanders Raises $26 Million, Powered by Online Donations Exceeding Obama’s 2008 Pace";
 var voices = window.speechSynthesis.getVoices(); // help iniitalize api, because wtf?
-var rate = 2;
+var rate = 1;
 var pitchh = 0;
 var synthCounter = 0;
 var wordTimeout;
@@ -367,7 +384,7 @@ for (var i = 0; i < allH2.length; i++){
 setTimeout(function() {
 
 	voices = window.speechSynthesis.getVoices(); // because it helps since speech chrome api is buggy
-	var voice = voices.filter(function(v) { return v.name == 'Boing'; })[0];
+	var voice = voices.filter(function(v) { return v.name == 'Bad News'; })[0];
 
 	var speakIt = function(text, voice, rate, pitch) {
 	  window.speechSynthesis.cancel(); // because it helps since speech chrome api is buggy
@@ -406,7 +423,7 @@ setTimeout(function() {
 		  	console.log (e);
 		  	//clearTimeout(wordTimeout)
 		  	//setTimeout(function(){
-	  		if (synthCounter < 10){
+	  		if (synthCounter < allParagraphs.length){
 		  		synthCounter++;
 		  		talk(synthCounter);
 		  	}
@@ -431,10 +448,8 @@ setTimeout(function() {
 		function count() {
 			console.log('count')
 			setTimeout(function(){
-				speakIt(allParagraphs[counter], voice, rate, pitchh);
-			}, 5)
-			
-					
+				speakIt(allParagraphs[counter], voice, rate, pitchh + sin(count));
+			}, 5)							
 		}
 		count();
 	}
@@ -447,4 +462,6 @@ setTimeout(function() {
 
 
 //} // while play end
+// save elements into a variable and call position in a draw()
+//selectAll('span')[i].position(x,y)f
 
