@@ -19,13 +19,18 @@ sampler.volume.value = -20;
 Tone.Buffer.onload = function(){
 	//sample.player.loop = true;
 	Tone.Transport.setInterval(function(time){
-		sampler.triggerAttackRelease("A.1", "1n", time);
+		sampler.triggerAttackRelease("A.1", "2n", time);
+		sampler.triggerAttackRelease("A.1", "2n", "+2n");
 		//sampler.triggerAttack("A.1", time + "4n");
-		sampler.triggerAttackRelease("A.2", "2n", time);
-	}, "4n");
+		sampler.triggerAttackRelease("A.2", "2n", "+8n");
+		sampler.triggerAttackRelease("A.1", "8n", "+4n");
+	}, "2n");
 	
 };
-
+Tone.Transport.loop = true;
 Tone.Transport.start();
+// //transport settings
+// Tone.Transport.loopEnd = "1m";
+
 
 
