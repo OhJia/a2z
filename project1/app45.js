@@ -385,13 +385,13 @@ x try: read one paragraph after another
 
 //var text = "Bernie Sanders Raises $26 Million, Powered by Online Donations Exceeding Obama’s 2008 Pace";
 var voices = window.speechSynthesis.getVoices(); // help iniitalize api, because wtf?
-var rate = 10;
-var pitchh = 1;
+var rate = 10; // SINGING
+var pitchh = 1; // SINGING
 var synthCounter = 0;
 var wordTimeout;
 
-var pit = [0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0];
-//var pit = [1.0, 1.0, 0.4, 0.6, 1.0, 1.0, 1.4, 1.6, 1.8, 2.0];
+//var pit = [0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8];
+var pit = [1.3, 1.2, 1.1, 1.2, 1.3, 1.3, 1.3, 1.2, 1.2, 1.2]; //SINGING
 
 var eachWords = []
 for (var i = 0; i < allH2.length; i++){
@@ -436,7 +436,8 @@ setTimeout(function() {
 		//   		talk(synthCounter);
 		//   	}
 	 // }, 10000)
-
+	
+	//  UNCOMMENT THIS
 	  msg.onend = function(e) {
 		  //console.log('Finished in ' + event.elapsedTime + ' seconds.');
 		  // move to the next word in queue
@@ -473,7 +474,7 @@ setTimeout(function() {
 			//console.log('count')
 			
 			setTimeout(function(){
-				speakIt(eachWords[counter], voice, rate, pit[counter%14]);				
+				speakIt(eachWords[counter], voice, rate, pit[counter%11]); // SINGING		
 				//speakIt(arpabet[counter], voice, rate, pitchh);
 			}, 5)
 			
