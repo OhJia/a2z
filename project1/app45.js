@@ -29,8 +29,8 @@ function setup() {
 
 	noCanvas();
 	movingElement = select('#author-0');
-	console.log("MOVING ELEMENT")
-	console.log('moving pos', movingElement.position());
+	// console.log("MOVING ELEMENT")
+	// console.log('moving pos', movingElement.position());
 
 	// button = createButton('play');
 	// button.parent(p5Button);
@@ -163,15 +163,17 @@ for (var i = 0; i < p.length; i++){
 	} 
 	/** If only contains numbers, ignore */
 	else if (nonTextMatch = tempPara.match(onlyNumbersRegex)){
-		console.log('\n');
-		console.log("ONLY NUMBERS:\n");
-		console.log(tempPara);
+		// console.log('\n');
+		// console.log("ONLY NUMBERS:\n");
+		// console.log(tempPara);
+		continue;
 	}
 	/** If only contains comment counts, ignore */
 	else if (nonTextMatch = tempPara.match(commentCountRegex)){
-		console.log('\n');
-		console.log("ONLY COMMENT COUNTS:\n");
-		console.log(tempPara);
+		// console.log('\n');
+		// console.log("ONLY COMMENT COUNTS:\n");
+		// console.log(tempPara);
+		continue;
 	}
 	else if (tempPara == ''){
 		continue;
@@ -187,9 +189,9 @@ for (var i = 0; i < p.length; i++){
 	
 }
 
-for (var i = 0; i < allParagraphs.length; i++){
-	console.log(allParagraphs[i]);
-}
+// for (var i = 0; i < allParagraphs.length; i++){
+// 	console.log(allParagraphs[i]);
+// }
 // for (var i = 0; i < allAuthors.length; i++){
 // 	console.log(allAuthors[i]);
 // }
@@ -197,10 +199,10 @@ for (var i = 0; i < allParagraphs.length; i++){
 /********************************************* 
 All words
 *********************************************/
-console.log('\n');
-console.log('\n');
-console.log('\n');
-console.log('ALL PARAGRAPH WORDS:\n');
+// console.log('\n');
+// console.log('\n');
+// console.log('\n');
+// console.log('ALL PARAGRAPH WORDS:\n');
 var allWords = [];
 //var wordRegex = /(?=.*\w)^(\w|')+$/g;
 var wordRegex = /\b([\w'’"\-.]+)\b/g;
@@ -276,14 +278,31 @@ keywords.sort(function(a, b) {
 // for (var i = 0; i < keywords.length; i++) {
 //   console.log(keywords[i] + ': ' + concordance[keywords[i]]);
 // }
+console.log('\n');
+console.log('\n');
+console.log('\n');
+console.log('SYLLABLES:\n');
+//arpabet = RiTa.getStresses("computer");
+var arpabet = [];
+//var arpabet = RiTa.tokenize("An elephant is a mammal");
+
+for (var i = 0; i < 100; i++){
+	// var syllableCount = new_count(keywords[i]);
+	// console.log(keywords[i], syllableCount);
+	arpabet.push(RiTa.getPhonemes(keywords[i]));
+	console.log(keywords[i], arpabet);
+}
+
 /********************************************* 
 Count syllables
 *********************************************/
 // function new_count(word) {
 //   word = word.toLowerCase();                                     //word.downcase!
-//   if(word.length <= 3) { return 1; }                             //return 1 if word.length <= 3
-//   word = word.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '');   //word.sub!(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '')
-//   word = word.replace(/^y/, '');                                 //word.sub!(/^y/, '')
+//   if(word.length < 3) { return 1; }                             //return 1 if word.length <= 3
+//   word = word.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, ''); 
+//   console.log("word1: ", word);  //word.sub!(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '')
+//   word = word.replace(/^y/, ''); 
+//   console.log("word2: ", word);                                 //word.sub!(/^y/, '')
 //   return word.match(/[aeiouy]{1,2}/g).length;                    //word.scan(/[aeiouy]{1,2}/).size
 // }
 
@@ -366,10 +385,13 @@ x try: read one paragraph after another
 
 //var text = "Bernie Sanders Raises $26 Million, Powered by Online Donations Exceeding Obama’s 2008 Pace";
 var voices = window.speechSynthesis.getVoices(); // help iniitalize api, because wtf?
-var rate = 1;
-var pitchh = 0;
+var rate = 10;
+var pitchh = 1;
 var synthCounter = 0;
 var wordTimeout;
+
+var pit = [0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0];
+//var pit = [1.0, 1.0, 0.4, 0.6, 1.0, 1.0, 1.4, 1.6, 1.8, 2.0];
 
 var eachWords = []
 for (var i = 0; i < allH2.length; i++){
@@ -384,7 +406,7 @@ for (var i = 0; i < allH2.length; i++){
 setTimeout(function() {
 
 	voices = window.speechSynthesis.getVoices(); // because it helps since speech chrome api is buggy
-	var voice = voices.filter(function(v) { return v.name == 'Boing'; })[0];
+	var voice = voices.filter(function(v) { return v.name == 'Bad News'; })[0];
 
 	var speakIt = function(text, voice, rate, pitch) {
 	  window.speechSynthesis.cancel(); // because it helps since speech chrome api is buggy
@@ -396,7 +418,7 @@ setTimeout(function() {
 	  if (pitch) {
 	  	msg.pitch = pitch;
 	  }
-	  console.log(text)
+	  //console.log(text)
 	  msg.text = text;
 	  msg.onresume = true;
 
@@ -420,10 +442,10 @@ setTimeout(function() {
 		  // move to the next word in queue
 		  //if (synthCounter < words.length){
 		  	//console.log('onend' + this.text)
-		  	console.log (e);
+		  	//console.log (e);
 		  	//clearTimeout(wordTimeout)
 		  	//setTimeout(function(){
-	  		if (synthCounter < allParagraphs.length){
+	  		if (synthCounter < eachWords.length){
 		  		synthCounter++;
 		  		talk(synthCounter);
 		  	}
@@ -438,17 +460,21 @@ setTimeout(function() {
 	  msg.onstart = function() {}
 
 	  window.speechSynthesis.cancel();
-	  console.log (msg);
+	  console.log (msg); //because it helps since speech chrome api is buggy
 	  window.speechSynthesis.speak(msg);
 	};
 
 	talk(0);
 
+	
+
 	function talk(counter){		
 		function count() {
-			console.log('count')
+			//console.log('count')
+			
 			setTimeout(function(){
-				speakIt(allParagraphs[counter], voice, rate, pitchh);
+				speakIt(eachWords[counter], voice, rate, pit[counter%14]);				
+				//speakIt(arpabet[counter], voice, rate, pitchh);
 			}, 5)
 			
 					
