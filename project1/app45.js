@@ -1,54 +1,3 @@
-/********************************************* 
-p5 DOM button
-*********************************************/
-var movingElement;
-var play = false;
-var btn = document.createElement("BUTTON");
-if (btn){
-	btn.style.backgroundColor = '#FF0000';
-	btn.style.zIndex = '111111';
-	btn.style.right = '50px';
-	btn.style.bottom = '50px';
-	btn.style.position = 'fixed';
-	btn.style.width = '50px';
-	btn.style.height= '50px';
-	btn.style.cornerRadius = '10%';
-}
-document.body.appendChild(btn); 
-
-var x = 100;
-var y = 200;
-
-btn.addEventListener("click", function(){
-	play = !play;
-	makeHighlighted(0);
-});
-
-
-function setup() {
-
-	noCanvas();
-	movingElement = select('#author-0');
-	// console.log("MOVING ELEMENT")
-	// console.log('moving pos', movingElement.position());
-
-	// button = createButton('play');
-	// button.parent(p5Button);
- //  	button.position(150, 300);
- //  	button.style("z-index", "999")
-  	//button.mousePressed(generateNewName);
-}
-
-// P5 DOM UPDATE
-
-function draw() {
-	// console.log('movingEl pos: ', movingElement.position());
-	movingElement.position(x, movingElement.position().y)
-	x++;
-}
-
-/************* End of button ********************/
-
 //while(play) {
 /********************************************* 
 TEXT ANALYSIS & STORAGE
@@ -246,52 +195,79 @@ for (var i = 0; i < allH3.length; i++){
 	}
 }
 
+/********************************************* 
+Concordance
+*********************************************/
 var concordance = {};
-var junkRegex = /^an|the|of|or|is|to|are|as|at|by|but|for|from|has|have|here|that|in|it|its|on|with$/i;
 var keywords = [];
 
-for (var i = 0; i < allWords.length; i++){
-	// var word = allWords[i].toLowerCase();
-	var word = allWords[i];
-	if (word.length > 1) {
-		if (word.match(onlyNumbersRegex)){
-			continue;
-		} else if (word.match(junkRegex)){
-			continue;
-		}else {
-			if (concordance[word] == undefined) {
-				concordance[word] = 1;
-				keywords.push(word);
-			} else {
-				concordance[word]++;
+var junkWords = [];
+var junkTempString = "^";
+var junkRegex;
+var txtFile = new XMLHttpRequest();
+txtFile.open("GET", "junk.txt", true);
+txtFile.onreadystatechange = function() {
+  if (txtFile.readyState === 4) {  // Makes sure the document is ready to parse.
+    if (txtFile.status === 200) {  // Makes sure it's found the file.
+        junkWords = txtFile.responseText.split("\n"); 
+		for (var i = 0; i < junkWords.length-1; i++){
+			junkTempString += junkWords[i] + "|";
+		}
+		junkTempString += junkWords[junkWords.length-1] + "$";
+		junkRegex = new RegExp(junkTempString, "i"); // junkRegex is created
+		console.log("JUNK REGEX", junkRegex);
+		matchSortWords();
+		console.log(concordance);
+		console.log("keywords: ", keywords);
+    }
+  }
+}
+txtFile.send(null);
+
+function matchSortWords(){
+	for (var i = 0; i < allWords.length; i++){
+		// var word = allWords[i].toLowerCase();
+		var word = allWords[i];
+		// console.log("WORDS: ", word);
+		if (word.length > 1) {
+			if (word.match(onlyNumbersRegex)){
+				continue;
+			} else if (word.match(junkRegex)){
+				continue;
+			}else {
+				if (concordance[word] == undefined) {
+					concordance[word] = 1;
+					keywords.push(word);
+				} else {
+					concordance[word]++;
+				}
 			}
 		}
 	}
+
+	keywords.sort(function(a, b) {
+	  return (concordance[b] -  concordance[a]);
+	});
 }
 
-keywords.sort(function(a, b) {
-  return (concordance[b] -  concordance[a]);
-});
-
-//console.log(concordance);
 
 // for (var i = 0; i < keywords.length; i++) {
 //   console.log(keywords[i] + ': ' + concordance[keywords[i]]);
 // }
-console.log('\n');
-console.log('\n');
-console.log('\n');
-console.log('SYLLABLES:\n');
+// console.log('\n');
+// console.log('\n');
+// console.log('\n');
+// console.log('SYLLABLES:\n');
 //arpabet = RiTa.getStresses("computer");
-var arpabet = [];
-//var arpabet = RiTa.tokenize("An elephant is a mammal");
+// var arpabet = [];
+// //var arpabet = RiTa.tokenize("An elephant is a mammal");
 
-for (var i = 0; i < 100; i++){
-	// var syllableCount = new_count(keywords[i]);
-	// console.log(keywords[i], syllableCount);
-	arpabet.push(RiTa.getPhonemes(keywords[i]));
-	console.log(keywords[i], arpabet);
-}
+// for (var i = 0; i < 100; i++){
+// 	// var syllableCount = new_count(keywords[i]);
+// 	// console.log(keywords[i], syllableCount);
+// 	arpabet.push(RiTa.getPhonemes(keywords[i]));
+// 	console.log(keywords[i], arpabet);
+// }
 
 /********************************************* 
 Count syllables
