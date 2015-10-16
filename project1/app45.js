@@ -385,7 +385,7 @@ x try: read one paragraph after another
 
 //var text = "Bernie Sanders Raises $26 Million, Powered by Online Donations Exceeding Obama’s 2008 Pace";
 var voices = window.speechSynthesis.getVoices(); // help iniitalize api, because wtf?
-var rate = 10; // SINGING
+var rate = 1.5; // SINGING
 var pitchh = 1; // SINGING
 var synthCounter = 0;
 var wordTimeout;
@@ -406,7 +406,7 @@ for (var i = 0; i < allH2.length; i++){
 setTimeout(function() {
 
 	voices = window.speechSynthesis.getVoices(); // because it helps since speech chrome api is buggy
-	var voice = voices.filter(function(v) { return v.name == 'Bad News'; })[0];
+	var voice = voices.filter(function(v) { return v.name == 'Boing'; })[0];
 
 	var speakIt = function(text, voice, rate, pitch) {
 	  window.speechSynthesis.cancel(); // because it helps since speech chrome api is buggy
