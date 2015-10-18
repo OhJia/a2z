@@ -23,15 +23,31 @@ x get from paragraphs h1, h2, h3 arrays
 x store into allWords array
 *********************************************/
 
+function forEach(array, action){
+	for (var i = 0; i < array.length; i++){
+		action(array[i]);
+	}
+}
+
+function map(func, array) {
+  var result = [];
+  forEach(array, function (element) {
+    result.push(func(element));
+  });
+  return result;
+}
+
 /********************************************* 
 Parse all headline elements
 *********************************************/
+var wordRegex = /\b([\w'’"\-.]+)\b/g;
 
 /* h1 elements*/
 var h1 = document.getElementsByTagName("h1");
 var allH1 = [];
 
 for (var i = 0; i < h1.length; i++){
+	h1[i].style.backgroundColor = '#00FF00';
 	allH1.push(h1[i].innerText);
 	document.getElementsByTagName("h1")[i].innerHTML = '<span id="headline1-' + 
 								i + '">'+h1[i].innerText+'</span>';	
@@ -40,23 +56,51 @@ for (var i = 0; i < h1.length; i++){
 /* h2 elements*/
 var h2 = document.getElementsByTagName("h2");
 var allH2 = [];
+var h2WordCount = -1;
 
 for (var i = 0; i < h2.length; i++){
+	h2[i].style.backgroundColor = '#FF0000';
 	if (h2[i].innerText == ''){
 		continue;
 	} else {
 		allH2.push(h2[i].innerText);
+		document.getElementsByTagName("h2")[i].innerHTML =
+		document.getElementsByTagName("h2")[i].innerText.replace(wordRegex, 
+			function(str){
+				if (str) {	
+					// console.log("STRINGS:\n");	
+					// console.log(str);
+					h2WordCount++;			
+					return '<span id="h2Words-' + h2WordCount + '">'+str+'</span>';					
+				}
+			}
+		);
 		document.getElementsByTagName("h2")[i].innerHTML = '<span id="headline2-' + 
-								i + '">'+h2[i].innerText+'</span>';
+								i + '">'+h2[i].innerHTML+'</span>';
 	}
 		
 }
+// console.log("document.getElementById('h2Words-5')\n");
+// console.log(document.getElementById('h2Words-5'));
+
+
+var eachWords = []
+for (var i = 0; i < allH2.length; i++){
+	var words = allH2[i].match(wordRegex);
+	if (words) {
+		for (var j = 0; j < words.length; j++) {
+			eachWords.push(words[j]);
+		}
+	}
+}
+
 
 /* h3 elements*/
 var h3 = document.getElementsByTagName("h3");
 var allH3 = [];
 
 for (var i = 0; i < h3.length; i++){
+	h3[i].style.backgroundColor = "0000FF"
 	allH3.push(h3[i].innerText);
 	document.getElementsByTagName("h3")[i].innerHTML = '<span id="headline3-' + 
 								i + '">'+h3[i].innerText+'</span>';	
@@ -83,6 +127,7 @@ var nonTextMatch = null;
 Parse all p elements
 *********************************************/
 for (var i = 0; i < p.length; i++){
+	//p[i].style.backgroundColor = "#FF00FF";
 	tempPara = p[i].innerText;
 	
 	/** If is author label, store in allAuthors array, and add span id tag */
@@ -95,18 +140,18 @@ for (var i = 0; i < p.length; i++){
 		if (authorMatch[4]) name += authorMatch[4];
 		//console.log(name);
 		allAuthors.push(name);
-
+		document.getElementsByTagName("p")[i].style.backgroundColor = "#FF00FF";
 		document.getElementsByTagName("p")[i].innerHTML = 
 			document.getElementsByTagName("p")[i].innerText.replace(nameRegex, 
-			function(str){
-				if (str) {	
-					// console.log("STRINGS:\n");	
-					// console.log(str);
-					authorCount++;			
-					return '<span id="author-' + authorCount + '">'+str+'</span>';					
+				function(str){
+					if (str) {	
+						// console.log("STRINGS:\n");	
+						// console.log(str);
+						authorCount++;			
+						return '<span id="author-' + authorCount + '">'+str+'</span>';					
+					}
 				}
-			}
-		);
+			);
 				
 		name = '';
 
@@ -130,6 +175,7 @@ for (var i = 0; i < p.length; i++){
 	}
 	/* For the rest, store in allParagraphs array and add span id tag */
 	else {
+		document.getElementsByTagName("p")[i].style.backgroundColor = "#0000FF";
 		document.getElementsByTagName("p")[i].innerHTML = '<span id="paragraph-' + 
 								pCount + '">'+tempPara+'</span>';		
 		pCount++;
@@ -155,7 +201,7 @@ All words
 // console.log('ALL PARAGRAPH WORDS:\n');
 var allWords = [];
 //var wordRegex = /(?=.*\w)^(\w|')+$/g;
-var wordRegex = /\b([\w'’"\-.]+)\b/g;
+//var wordRegex = /\b([\w'’"\-.]+)\b/g;
 for (var i = 0; i < allParagraphs.length; i++){
 	var words = allParagraphs[i].match(wordRegex);
 	// console.log('w', words);

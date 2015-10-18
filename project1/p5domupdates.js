@@ -1,9 +1,8 @@
-/********************************************* 
-p5 DOM 
-*********************************************/
-var movingElement;
 
-//var button;
+/********************************************* 
+start/stop button
+*********************************************/
+
 var start = 0;
 
 var btn = document.createElement("BUTTON");		
@@ -39,6 +38,9 @@ btn.addEventListener("click", function(){
 	
 });
 
+/************* End of button ********************/
+
+var movingElement;
 var x = 100;
 var y = 200;
 
@@ -78,4 +80,3 @@ function play() {
 // 	talk(0);
 // }
 
-/************* End of button ********************/

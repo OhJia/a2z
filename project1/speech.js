@@ -15,15 +15,15 @@ var voice;
 //var pit = [0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8];
 var pit = [1.3, 1.2, 1.1, 1.2, 1.3, 1.3, 1.3, 1.2, 1.2, 1.2]; //SINGING
 
-var eachWords = []
-for (var i = 0; i < allH2.length; i++){
-	var words = allH2[i].match(wordRegex);
-	if (words) {
-		for (var j = 0; j < words.length; j++) {
-			eachWords.push(words[j]);
-		}
-	}
-}
+// var eachWords = []
+// for (var i = 0; i < allH2.length; i++){
+// 	var words = allH2[i].match(wordRegex);
+// 	if (words) {
+// 		for (var j = 0; j < words.length; j++) {
+// 			eachWords.push(words[j]);
+// 		}
+// 	}
+// }
 
 //setTimeout(function() {
 //if (play){
@@ -82,6 +82,7 @@ for (var i = 0; i < allH2.length; i++){
 			setTimeout(function(){
 				speakIt(eachWords[counter], voice, rate, pit[counter%11]); // SINGING		
 				//speakIt(arpabet[counter], voice, rate, pitchh);
+				updateWordDom(counter);
 			}, 5)
 			
 					
@@ -92,5 +93,14 @@ for (var i = 0; i < allH2.length; i++){
 
 //}	
 //}, 1000);
+
+function updateWordDom(counter){
+	
+	var el = document.getElementById('h2Words-' + counter);
+	console.log(el);
+	console.log('\n');
+	if (el)
+		el.style.color = "#FFFFFF";
+}
 
 /************* End of speech synth ********************/
