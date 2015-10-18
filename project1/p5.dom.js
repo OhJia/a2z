@@ -1,4 +1,4 @@
-/*! p5.dom.js v0.2.2 May 30, 2015 */
+/*! p5.dom.js v0.2.4 October 6, 2015 */
 /**
  * <p>The web is much more than just canvas and p5.dom makes it easy to interact
  * with other HTML5 objects, including text, hyperlink, image, input, video,
@@ -16,7 +16,7 @@
  * <a href="http://p5js.org/download">p5 complete</a> or you can download the single file
  * <a href="https://raw.githubusercontent.com/lmccart/p5.js/master/lib/addons/p5.dom.js">
  * here</a>.</p>
- * <p>See <a href="https://github.com/processing/p5.js/wiki/Beyond-the-canvas">tutorial: beyond the canvas]</a>
+ * <p>See <a href="https://github.com/processing/p5.js/wiki/Beyond-the-canvas">tutorial: beyond the canvas</a>
  * for more info on how to use this libary.</a>
  *
  * @module p5.dom
@@ -164,6 +164,13 @@
    * @method createDiv
    * @param  {String} html inner HTML for element created
    * @return {Object/p5.Element} pointer to p5.Element holding created node
+   * @example
+   * <div class='norender'><code>
+   * var myDiv;
+   * function setup() {
+   *   myDiv = createDiv('this is some text');
+   * }
+   * </code></div>
    */
 
   /**
@@ -175,6 +182,13 @@
    * @method createP
    * @param  {String} html inner HTML for element created
    * @return {Object/p5.Element} pointer to p5.Element holding created node
+   * @example
+   * <div class='norender'><code>
+   * var myP;
+   * function setup() {
+   *   myP = createP('this is some text');
+   * }
+   * </code></div>
    */
 
   /**
@@ -185,6 +199,13 @@
    * @method createSpan
    * @param  {String} html inner HTML for element created
    * @return {Object/p5.Element} pointer to p5.Element holding created node
+   * @example
+   * <div class='norender'><code>
+   * var mySpan;
+   * function setup() {
+   *   mySpan = createSpan('this is some text');
+   * }
+   * </code></div>
    */
   var tags = ['div', 'p', 'span'];
   tags.forEach(function(tag) {
@@ -207,6 +228,13 @@
    * @param  {String} [alt] alternate text to be used if image does not load
    * @param  {Function} [successCallback] callback to be called once image data is loaded
    * @return {Object/p5.Element} pointer to p5.Element holding created node
+   * @example
+   * <div class='norender'><code>
+   * var img;
+   * function setup() {
+   *   img = createImg('http://p5js.org/img/asterisk-01.png');
+   * }
+   * </code></div>
    */
   p5.prototype.createImg = function() {
     var elt = document.createElement('img');
@@ -245,6 +273,13 @@
    * @param  {String} [target]   target where new link should open,
    *                             could be _blank, _self, _parent, _top.
    * @return {Object/p5.Element} pointer to p5.Element holding created node
+   * @example
+   * <div class='norender'><code>
+   * var myLink;
+   * function setup() {
+   *   myLink = createA('http://p5js.org/', 'this is a link');
+   * }
+   * </code></div>
    */
   p5.prototype.createA = function(href, html, target) {
     var elt = document.createElement('a');
@@ -252,50 +287,6 @@
     elt.innerHTML = html;
     if (target) elt.target = target;
     return addElement(elt, this);
-  };
-
-  /**
-   * Creates an &lt;a&gt;&lt;/a&gt; element in the DOM for including a hyperlink.
-   * Appends to the container node if one is specified, otherwise
-   * appends to body.
-   *
-   * @param  {String} align       passing 'vertical', 'horizontal', or 'both' aligns element accordingly
-   * @return {Object/p5.Element} pointer to p5.Element holding created node
-   */
-  
-  p5.Element.prototype.center = function(align) {
-    var style = this.elt.style.display;
-    var hidden = this.elt.style.display === 'none';
-    var pos = this.position();
-
-    if (hidden)
-      this.show();
-
-    this.elt.style.display = 'block'; 
-    this.position(0,0);
-
-    var wOffset = this.parent().offsetWidth - this.elt.offsetWidth;
-    var hOffset = this.parent().offsetHeight - this.elt.offsetHeight;
-
-
-
-    if (align === 'both' || !align){
-      this.position(wOffset/2, hOffset/2);
-    }else if (align === 'horizontal'){
-      var y = pos.y;
-      this.position(wOffset/2, y);
-      console.log(this.position(), 'pospospos');
-    }else if (align === 'vertical'){
-      var x = pos.x;
-      this.position(x, hOffset/2);
-    }
-
-    this.style('display', style);
-    
-    if (hidden)
-      this.hide();
-    
-    return this;
   };
 
   /** INPUT **/
@@ -312,6 +303,20 @@
    * @param  {Number} max maximum value of the slider
    * @param  {Number} [value] default value of the slider
    * @return {Object/p5.Element} pointer to p5.Element holding created node
+   * @example
+   * <div><code>
+   * var slider;
+   * function setup() {
+   *   slider = createSlider(0, 255, 100);
+   *   slider.position(10, 10);
+   *   slider.style('width', '80px');
+   * }
+   *
+   * function draw() {
+   *   var val = slider.value();
+   *   background(val);
+   * }
+   * </code></div>
    */
   p5.prototype.createSlider = function(min, max, value, step) {
     var elt = document.createElement('input');
@@ -319,7 +324,7 @@
     elt.min = min;
     elt.max = max;
     if (step) elt.step = step;
-    if (value) elt.value = value;
+    if (typeof(value) === "number") elt.value = value;
     return addElement(elt, this);
   };
 
@@ -334,6 +339,22 @@
    * @param  {String} label label displayed on the button
    * @param  {String} [value] value of the button
    * @return {Object/p5.Element} pointer to p5.Element holding created node
+   * @example
+   * <div class='norender'><code>
+   * var button;
+   * function setup() {
+   *   createCanvas(100, 100);
+   *   background(0);
+   *   button = createButton('click me');
+   *   button.position(19, 19);
+   *   button.mousePressed(changeBG);
+   * }
+   *
+   * function changeBG() {
+   *   var val = random(255);
+   *   background(val);
+   * }
+   * </code></div>
    */
   p5.prototype.createButton = function(label, value) {
     var elt = document.createElement('button');
@@ -366,11 +387,16 @@
       }
       return self;
     };
+    this.value = function(val){
+      self.value = val;
+      return this;
+    };
     if (arguments[0]){
       var ran = Math.random().toString(36).slice(2);
       var label = document.createElement('label');
       elt.setAttribute('id', ran);
       label.htmlFor = ran;
+      self.value(arguments[0]);
       label.appendChild(document.createTextNode(arguments[0]));
       addElement(label, this);
     }
@@ -381,12 +407,12 @@
   };
 
   /**
-   * Creates a dropdown menu &lt;input&gt;&lt;/input&gt; element in the DOM.
-   * @method createDropdown
+   * Creates a dropdown menu &lt;select&gt;&lt;/select&gt; element in the DOM.
+   * @method createSelect
    * @param {boolean} [multiple] [true if dropdown should support multiple selections]
    * @return {Object/p5.Element} pointer to p5.Element holding created node
    */
-  p5.prototype.createDropdown = function(mult) {
+  p5.prototype.createSelect = function(mult) {
     var elt = document.createElement('select');
     if (mult){
       elt.setAttribute('multiple', 'true');
@@ -395,7 +421,10 @@
     self.option = function(name, value){
       var opt = document.createElement('option');
       opt.innerHTML = name;
-      opt.value = value;
+      if (arguments.length > 1)
+        opt.value = value;
+      else
+        opt.value = name;
       elt.appendChild(opt);
     };
     self.selected = function(value){
@@ -485,9 +514,9 @@
             };
           };
           
-          // Text of data?
+          // Text or data?
           // This should likely be improved
-          if (f.type === 'text') {
+          if (f.type.indexOf('text') > -1) {
             reader.readAsText(f);
           } else {
             reader.readAsDataURL(f);
@@ -611,7 +640,7 @@
    *                                    stream has loaded
    * @return {Object/p5.Element} capture video p5.Element
    * @example
-   * <div><class='norender'><code>
+   * <div class='norender'><code>
    * var capture;
    *
    * function setup() {
@@ -624,7 +653,7 @@
    *   filter(INVERT);
    * }
    * </code></div>
-   * <div><class='norender'><code>
+   * <div class='norender'><code>
    * function setup() {
    *   createCanvas(480, 120);
    *   var constraints = {
@@ -832,17 +861,9 @@
     if (arguments.length === 0){
       return { 'x' : this.elt.offsetLeft , 'y' : this.elt.offsetTop };
     }else{
-      if (!arguments[2] || arguments[2] === 'absolute')
-        this.elt.style.position = 'absolute';
-      else
-        this.elt.style.position = arguments[2];
-      if (arguments[0][arguments[0].length - 1] === '%'){
-        this.elt.style.left = arguments[0];
-        this.elt.style.top = arguments[1];
-      }else{
-        this.elt.style.left = arguments[0]+'px';
-        this.elt.style.top = arguments[1]+'px';
-      }
+      this.elt.style.position = 'absolute';
+      this.elt.style.left = arguments[0]+'px';
+      this.elt.style.top = arguments[1]+'px';
       this.x = arguments[0];
       this.y = arguments[1];
       return this;
@@ -939,15 +960,22 @@
   };
 
   /**
-   * Sets the given style (css) property of the element with the given value.
-   * If no value is specified, returns the value of the given property,
-   * or undefined if the property is not.
+   * Sets the given style (css) property (1st arg) of the element with the
+   * given value (2nd arg). If a single argument is given, .style()
+   * returns the value of the given property; however, if the single argument
+   * is given in css syntax ('text-align:center'), .style() sets the css
+   * appropriatly. .style() also handles 2d and 3d css transforms. If
+   * the 1st arg is 'rotate', 'translate', or 'position', the following arguments
+   * accept Numbers as values. ('translate', 10, 100, 50);
    *
    * @method style
    * @param  {String} property   property to be set
-   * @param  {String} [value]    value to assign to property
+   * @param  {String|Number} [value]   value to assign to property
+   * @param  {String|Number} [value]   value to assign to property (rotate/translate)
+   * @param  {String|Number} [value]   value to assign to property (rotate/translate)
+   * @param  {String|Number} [value]   value to assign to property (translate)
    * @return {String|Object/p5.Element} value of property, if no value is specified
-   *                             or p5.Element
+   * or p5.Element
    * @example
    * <div><code class="norender">
    * var myDiv = createDiv("I like pandas.");
@@ -956,19 +984,72 @@
    * </code></div>
    */
   p5.Element.prototype.style = function(prop, val) {
+    var self = this;
+
     if (typeof val === 'undefined') {
-      var attrs = prop.split(';');
-      for (var i=0; i<attrs.length; i++) {
-        var parts = attrs[i].split(':');
-        if (parts[0] && parts[1]) {
-          this.elt.style[parts[0].trim()] = parts[1].trim();
+      if (prop.indexOf(':') === -1) {
+        var styles = window.getComputedStyle(self.elt);
+        var style = styles.getPropertyValue(prop);
+        return style;
+      } else {
+        var attrs = prop.split(';');
+        for (var i = 0; i < attrs.length; i++) {
+          var parts = attrs[i].split(':');
+          if (parts[0] && parts[1]) {
+            this.elt.style[parts[0].trim()] = parts[1].trim();
+          }
         }
       }
     } else {
-      this.elt.style[prop] = val;
-      if (prop === 'width' || prop === 'height' || prop === 'left' || prop === 'top'){
-        var numVal = val.replace(/\D+/g,'');
-        this[prop] = parseInt(numVal);
+      if (prop === 'rotate'){
+        if (arguments.length === 2) {
+          var style = this.elt.style.transform.replace(/rotate3d\(.*\)/g, '');
+          style = style.replace(/rotate[X-Z]?\(.*\)/g, '');
+          this.elt.style.transform = 'rotate(' + arguments[0] + 'deg)';
+          this.elt.style.transform += style;
+        } else if (arguments.length === 3) {
+          var style = this.elt.style.transform.replace(/rotate3d\(.*\)/g, '');
+          style = style.replace(/rotate[X-Z]?\(.*\)/g, '');
+          this.elt.style.transform = 'rotate(' + arguments[0] + 'deg, ' + arguments[1] + 'deg)';
+          this.elt.style.transform += style;
+        } else if (arguments.length === 4) {
+          var style = this.elt.style.transform.replace(/rotate3d\(.*\)/g, '');
+          style = style.replace(/rotate[X-Z]?\(.*\)/g, '');
+          this.elt.style.transform = 'rotateX(' + arguments[0] + 'deg)';
+          this.elt.style.transform += 'rotateY(' + arguments[1] + 'deg)';
+          this.elt.style.transform += 'rotateZ(' + arguments[2] + 'deg)';
+          this.elt.style.transform += style;
+        }
+      } else if (prop === 'translate') {
+        if (arguments.length === 3) {
+          var style = this.elt.style.transform.replace(/translate3d\(.*\)/g, '');
+          style = style.replace(/translate[X-Z]?\(.*\)/g, '');
+          this.elt.style.transform = 'translate(' + arguments[0] + 'px, ' + arguments[1] + 'px)';
+          this.elt.style.transform += style;
+        } else if (arguments.length === 4) {
+          var style = this.elt.style.transform.replace(/translate3d\(.*\)/g, '');
+          style = style.replace(/translate[X-Z]?\(.*\)/g, '');
+          this.elt.style.transform = 'translate3d(' + arguments[0] + 'px,' + arguments[1] + 'px,' + arguments[2] + 'px)';
+          this.elt.style.transform += style;
+          this.elt.parentElement.style.perspective = '1000px';
+        } else if (arguments.length === 5) {
+          var style = this.elt.style.transform.replace(/translate3d\(.*\)/g, '');
+          style = style.replace(/translate[X-Z]?\(.*\)/g, '');
+          this.elt.style.transform = 'translate3d(' + arguments[0] + 'px,' + arguments[1] + 'px,' + arguments[2] + 'px)';
+          this.elt.style.transform += style;
+          this.elt.parentElement.style.perspective = arguments[3] + 'px';
+        }
+      } else if (prop === 'position') {
+        this.elt.style.left = arguments[1] + 'px';
+        this.elt.style.top = arguments[2] + 'px';
+        this.x = arguments[1];
+        this.y = arguments[2];
+      } else {
+        this.elt.style[prop] = val;
+        if (prop === 'width' || prop === 'height' || prop === 'left' || prop === 'top') {
+          var numVal = val.replace(/\D+/g, '');
+          this[prop] = parseInt(numVal, 10); 
+        }
       }
     }
     return this;
@@ -1091,7 +1172,7 @@
           this.width = aW;
           this.height = aH;
         }
-        this.elt.style.overflow = 'hidden';
+        
         this.width = this.elt.offsetWidth;
         this.height = this.elt.offsetHeight;
 
@@ -1297,18 +1378,18 @@
   }
   p5.MediaElement.prototype.updatePixels =  function(x, y, w, h){
     if (this.loadedmetadata) { // wait for metadata
-      p5.prototype.updatePixels.call(this, x, y, w, h);
+      p5.Renderer2D.prototype.updatePixels.call(this, x, y, w, h);
     }
     return this;
   }
   p5.MediaElement.prototype.get = function(x, y, w, h){
     if (this.loadedmetadata) { // wait for metadata
-      return p5.prototype.get.call(this, x, y, w, h);
+      return p5.Renderer2D.prototype.get.call(this, x, y, w, h);
     } else return [0, 0, 0, 255];
   };
   p5.MediaElement.prototype.set = function(x, y, imgOrCol){
     if (this.loadedmetadata) { // wait for metadata
-      p5.prototype.set.call(this, x, y, imgOrCol);
+      p5.Renderer2D.prototype.set.call(this, x, y, imgOrCol);
     }
   };
 

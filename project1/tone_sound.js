@@ -28,9 +28,4 @@ Tone.Buffer.onload = function(){
 	
 };
 Tone.Transport.loop = true;
-Tone.Transport.start();
-// //transport settings
-// Tone.Transport.loopEnd = "1m";
-
-
-
+// Tone.Transport.start();
