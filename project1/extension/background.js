@@ -1,16 +1,14 @@
-<!--
+/*
 
   Developed by Jiashan Wu <http://fromjia.com>.
 
   ####################################################################################
 
+*/
 
--->
-<html><head>
-<title>Singing Browser Extension</title>
 
-</head>
-<body>
-<div id="singing"></div>
-</body>
-</html>
+chrome.browserAction.onClicked.addListener( function(tab) {
+	chrome.tabs.sendRequest( tab.id, {'speakSelection': true});
+});
+
+

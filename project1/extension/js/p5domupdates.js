@@ -113,6 +113,7 @@ function draw() {
 		movingElements[synthCounter].style.fontSize="50px";
 		movingElements[synthCounter].style.backgroundColor="#0645F9";
 		movingElements[synthCounter].style.color="#0897F9";
+		window.scrollTo(0, getElementOffset(movingElements[synthCounter]).top-200);
 	}
 	// else x = 100;
 	//x++;
@@ -131,9 +132,34 @@ function play() {
 }
 
 
-document.addEventListener("DOMContentLoaded", function(e) {
-	parseHTMLFunc();
-	p5Start();
+function getElementOffset(element)
+{
+    var de = document.documentElement;
+    var box = element.getBoundingClientRect();
+    var top = box.top + window.pageYOffset - de.clientTop;
+    var left = box.left + window.pageXOffset - de.clientLeft;
+    return { top: top, left: left };
+}
+
+
+
+
+
+
+// document.addEventListener("DOMContentLoaded", function(e) {
+// 	parseHTMLFunc();
+// 	p5Start();
+// });
+
+var hasStarted = false;
+
+chrome.extension.onRequest.addListener(function(request) {
+	if (request['speakSelection'] != undefined) {
+		if (hasStarted || !document.hasFocus()) return;
+		hasStarted = true;
+		parseHTMLFunc();
+		p5Start();
+	}
 });
 
 
