@@ -101,9 +101,10 @@ function p5Start(){
 		// wordSize[i] = movingElements[i].width;
 	}
 	console.log('***********************')
-	console.log(movingElements[0].style)
+	console.log(movingElements[5])
 
 }
+
 
 
 function setup() {
@@ -146,6 +147,8 @@ function draw() {
 	//ellipse(windowWidth-100, windowHeight-100, 1000, 1000);
 	if (isPlaying) {
 		x++;
+		console.log('***********************')
+		console.log(movingElements[synthCounter]);
 		// movingElements[synthCounter].style("z-index", "999");
 		// movingElements[synthCounter].style("font-size", "50px");
 		// movingElements[synthCounter].style("background-color", "#0645F9");

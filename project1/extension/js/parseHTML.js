@@ -17,6 +17,8 @@ var commentCountRegex;
 var nonTextMatch;
 
 var allWords;
+var pWordCount;
+var allPWords;
 
 var concordance;
 var keywords;
@@ -115,13 +117,15 @@ function parseHTMLFunc() {
 	p = document.getElementsByTagName("p");
 	allParagraphs = []; // PARAGRAPHS TEXT ARE STORED HERE
 	pCount = 0;
+	pWordCount = 0;
+	allPWords = [];
 	tempPara = '';
 
 	authorMatch = null;
 	name = '';
 	allAuthors = []; // AUTHOR NAMES ARE STORED HERE
 	authorCount = -1; 
-	authorRegex = /^by (\w+\.?)( \w+\.?)( \w+\.?)?( \w+\.?)?/i;
+	authorRegex = /^(updated)? by (\w+\.?)( \w+\.?)( \w+\.?)?( \w+\.?)?/i;
 	nameRegex = /(\w+\.?)( \w+\.?)( \w+\.?)/g;
 
 	onlyNumbersRegex = /^\d+$/;
@@ -139,10 +143,10 @@ function parseHTMLFunc() {
 		/** NEED TO FIX */
 		if (authorMatch = tempPara.match(authorRegex)) {
 			
-			if (authorMatch[1]) name += authorMatch[1];
 			if (authorMatch[2]) name += authorMatch[2];
 			if (authorMatch[3]) name += authorMatch[3];
 			if (authorMatch[4]) name += authorMatch[4];
+			if (authorMatch[5]) name += authorMatch[5];
 			//console.log(name);
 			allAuthors.push(name);
 			// document.getElementsByTagName("p")[i].style.backgroundColor = "#FF00FF";
@@ -181,14 +185,38 @@ function parseHTMLFunc() {
 		/* For the rest, store in allParagraphs array and add span id tag */
 		else {
 			// document.getElementsByTagName("p")[i].style.backgroundColor = "#E6E7E8";
+			document.getElementsByTagName("p")[i].innerHTML =
+			document.getElementsByTagName("p")[i].innerText.replace(wordRegex, 
+				function(str){
+					if (str) {	
+						// console.log("STRINGS:\n");	
+						// console.log(str);
+						//allPWords.push(str);
+						pWordCount++;			
+						return '<span id="pWords-' + pWordCount + '">'+str+'</span>';					
+					}
+				}
+			);
 			document.getElementsByTagName("p")[i].innerHTML = '<span id="paragraph-' + 
-									pCount + '">'+tempPara+'</span>';		
+									pCount + '">'+p[i].innerHTML+'</span>';
 			pCount++;
 			allParagraphs.push(tempPara);
 		}
 
 		
 	}
+
+	for (var i = 0; i < allParagraphs.length; i++){
+		var words = allParagraphs[i].match(wordRegex);
+		if (words) {
+			for (var j = 0; j < words.length; j++) {
+				allPWords.push(words[j]);
+			}
+		}
+	}
+
+	console.log(document.getElementById('pWords-5'));
+	
 
 	// for (var i = 0; i < allParagraphs.length; i++){
 	// 	console.log(allParagraphs[i]);

@@ -53,13 +53,7 @@ var pit = [1.0, 1.3, 1.6, 2.0, 1.6, 1.3, 1.0];
 	
 	//  UNCOMMENT THIS
 	  msg.onend = function(e) {
-		  //console.log('Finished in ' + event.elapsedTime + ' seconds.');
-		  // move to the next word in queue
-		  //if (synthCounter < words.length){
-		  	//console.log('onend' + this.text)
-		  	//console.log (e);
-		  	//clearTimeout(wordTimeout)
-		  	//setTimeout(function(){
+		  
 		  	
 	  		if (synthCounter < eachWords.length){
 		  		synthCounter++;
@@ -68,11 +62,7 @@ var pit = [1.0, 1.3, 1.6, 2.0, 1.6, 1.3, 1.0];
 		  		// console.log( ((new Date()) - dd ) / 1000)
 		  		talk(synthCounter);
 		  	}
-			  //}, 0)
-		  	
-		  	
-		  	
-		  //}
+			 
 	  };
 	  msg.onnomatch = function() {}
 	  msg.onerror = function() {}
