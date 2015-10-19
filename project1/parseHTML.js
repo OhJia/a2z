@@ -47,7 +47,7 @@ var h1 = document.getElementsByTagName("h1");
 var allH1 = [];
 
 for (var i = 0; i < h1.length; i++){
-	h1[i].style.backgroundColor = '#00FF00';
+	// h1[i].style.backgroundColor = '#00FF00';
 	allH1.push(h1[i].innerText);
 	document.getElementsByTagName("h1")[i].innerHTML = '<span id="headline1-' + 
 								i + '">'+h1[i].innerText+'</span>';	
@@ -59,7 +59,7 @@ var allH2 = [];
 var h2WordCount = -1;
 
 for (var i = 0; i < h2.length; i++){
-	h2[i].style.backgroundColor = '#FF0000';
+	// h2[i].style.backgroundColor = '#FF0000';
 	if (h2[i].innerText == ''){
 		continue;
 	} else {
@@ -140,7 +140,7 @@ for (var i = 0; i < p.length; i++){
 		if (authorMatch[4]) name += authorMatch[4];
 		//console.log(name);
 		allAuthors.push(name);
-		document.getElementsByTagName("p")[i].style.backgroundColor = "#FF00FF";
+		// document.getElementsByTagName("p")[i].style.backgroundColor = "#FF00FF";
 		document.getElementsByTagName("p")[i].innerHTML = 
 			document.getElementsByTagName("p")[i].innerText.replace(nameRegex, 
 				function(str){
@@ -175,7 +175,7 @@ for (var i = 0; i < p.length; i++){
 	}
 	/* For the rest, store in allParagraphs array and add span id tag */
 	else {
-		document.getElementsByTagName("p")[i].style.backgroundColor = "#0000FF";
+		// document.getElementsByTagName("p")[i].style.backgroundColor = "#E6E7E8";
 		document.getElementsByTagName("p")[i].innerHTML = '<span id="paragraph-' + 
 								pCount + '">'+tempPara+'</span>';		
 		pCount++;
