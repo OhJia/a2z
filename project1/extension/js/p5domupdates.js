@@ -19,7 +19,7 @@ function p5Start(){
 	if (btn){		
 		btn.style.backgroundColor = '#FF0000';		
 		btn.style.zIndex = '111111';		
-		btn.style.right = '72px';		
+		btn.style.right = window.innerWidth/2+'px';		
 		btn.style.bottom = '72px';		
 		btn.style.position = 'fixed';		
 		btn.style.width = '60px';		
@@ -63,7 +63,7 @@ function p5Start(){
 	if (circle){		
 		circle.style.backgroundColor = '#0000FF';		
 		circle.style.zIndex = '11111';		
-		circle.style.right = '72px';		
+		circle.style.right = window.innerWidth/2+'px';		
 		circle.style.bottom = '72px';		
 		circle.style.position = 'fixed';		
 		circle.style.width = '50px';		
@@ -72,6 +72,7 @@ function p5Start(){
 		circle.style.outline = 'none';
 		circle.style.border = '0px solid transparent';
 		circle.style.opacity=circleOpacity;
+		circle.style.marginRight = '5px';
 	}		
 	document.body.appendChild(circle); 
 
@@ -88,8 +89,9 @@ function p5Start(){
 		circle2.style.outline = 'none';
 		circle2.style.border = '0px solid transparent';
 		circle2.style.opacity=circleOpacity;
+
 	}		
-	document.body.appendChild(circle2); 
+	//document.body.appendChild(circle2); 
 	
 
 	//var y = 200;
