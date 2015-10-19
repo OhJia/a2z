@@ -11,7 +11,7 @@ var pitchh = 1; // SINGING
 var synthCounter = 0;
 var wordTimeout;
 var voice;
-var x = 50;
+var x = 60;
 var isPlaying = false;
 var dd;
 var speechRate = .86;

@@ -6,11 +6,11 @@
   "homepage_url" :  "http://fromjia.com",
 
   "icons": {
-    "128" : "icons/doodremove128.png",
-    "64" :  "icons/doodremove64.png",
-    "48" :  "icons/doodremove48.png",
-    "32" :  "icons/doodremove32.png",
-    "16" :  "icons/doodremove16.png"
+    "128" : "icons/singing128.png",
+    "64" :  "icons/singing64.png",
+    "48" :  "icons/singing48.png",
+    "32" :  "icons/singing32.png",
+    "16" :  "icons/singing16.png"
   },
 
   "manifest_version" : 2,
