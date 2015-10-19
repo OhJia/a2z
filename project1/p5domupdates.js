@@ -66,18 +66,18 @@ function p5Start(){
 		
 		circleOpacity = 100 / x;
 		// play/pause button
-		circle = createButton('');
-	  	circle.position(windowWidth-120, windowHeight-120);
-	  	circle.size(x, x);
-	  	circle.style("z-index", "999");
-	  	circle.style("background-color", "#0000FF");
-	  	// circle.style("right", "72px");
-	  	// circle.style("bottom", "72px");
-	  	circle.style("opacity", circleOpacity);
-	  	circle.style("border", "none");
-	  	circle.style("position", "fixed");
-	  	circle.style("borderRadius", "50%");
-	  	circle.style("style", "none");
+		// circle = createButton('');
+	 //  	circle.position(windowWidth-120, windowHeight-120);
+	 //  	circle.size(x, x);
+	 //  	circle.style("z-index", "999");
+	 //  	circle.style("background-color", "#0000FF");
+	 //  	// circle.style("right", "72px");
+	 //  	// circle.style("bottom", "72px");
+	 //  	circle.style("opacity", circleOpacity);
+	 //  	circle.style("border", "none");
+	 //  	circle.style("position", "fixed");
+	 //  	circle.style("borderRadius", "50%");
+	 //  	circle.style("style", "none");
 	  	//circle.mousePressed(play);
 	  	//button.addEventListener("click", play);
 	}
