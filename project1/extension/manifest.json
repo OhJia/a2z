@@ -1,0 +1,53 @@
+{
+
+  "name" :          "Singing Browser",
+  "version" :       "0.0.1",
+  "description" :   "Sing Song",
+  "homepage_url" :  "http://fromjia.com",
+
+  "icons": {
+    "128" : "icons/doodremove128.png",
+    "64" :  "icons/doodremove64.png",
+    "48" :  "icons/doodremove48.png",
+    "32" :  "icons/doodremove32.png",
+    "16" :  "icons/doodremove16.png"
+  },
+
+  "manifest_version" : 2,
+
+  "content_security_policy" : "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
+
+  "web_accessible_resources" : [
+    "audio/kick.mp3",
+    "audio/snare.mp3",
+    "audio/hh.mp3"
+  ],
+
+  "permissions" :      [
+    "tabs", 
+    "http://*/*", 
+    "https://*/*"
+  ],
+
+  "background" :  {
+    "page" : "background.html"
+  },
+
+  "content_scripts" : [
+    {
+      "matches" : ["http://*/*", "https://*/*"],
+      "js" : [
+        "js/p5.js",
+        "js/p5.dom.js",
+        "js/rita.js",
+        "js/Tone.js",
+        "js/parseHTML.js",
+        "js/tone_sound.js",
+        "js/speech.js",
+        "js/p5domupdates.js"
+      ],
+      "run_at" : "document_start"
+    }
+   ]
+
+}
