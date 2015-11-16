@@ -19,7 +19,7 @@ var T = new Twit(config);
 tweeter();
 
 // Once every N milliseconds
-setInterval(tweeter, 60*5*1000);
+setInterval(tweeter, 60*1000);
 
 // Here is the bot!
 function tweeter() {
