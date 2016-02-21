@@ -11,7 +11,7 @@ var markov;
 
 // Preload the seed data
 function preload() {
-  lines = loadStrings('positivity.txt');
+  lines = loadStrings('hmail.txt');
 }
 
 
