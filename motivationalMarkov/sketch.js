@@ -11,7 +11,7 @@ var markov;
 
 // Preload the seed data
 function preload() {
-  lines = loadStrings('hmail.txt');
+  lines = loadStrings('positivity.txt');
 }
 
 
@@ -23,6 +23,7 @@ function setup() {
   // Feed all the lines from the text file into the generator
   for (var i = 0; i < lines.length; i++) {
     markov.feed(lines[i]);
+    console.log(markov.ngrams)
   }
   // Set up a button
   var button = select('#button');
@@ -44,6 +45,8 @@ function generate() {
   // var output = select('#name');
   var text = markov.generate();
   // output.html(text);
+  console.log("******** text *********")
+  console.log(text);
   var sentences = text.split(/([.?!])/);
   var newText = "";
 
