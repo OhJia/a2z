@@ -23,7 +23,8 @@ function setup() {
   // Feed all the lines from the text file into the generator
   for (var i = 0; i < lines.length; i++) {
     markov.feed(lines[i]);
-    console.log(markov.ngrams)
+    //console.log(markov.ngrams)
+    console.log(lines[i]);
   }
   // Set up a button
   var button = select('#button');
